@@ -23,5 +23,8 @@ Route::get('/ok',function(){
 });
 
 Route::namespace('API')->name('api.')->group(function(){
-    Route::get('/products','ProductController@index')->name('products');
+    Route::prefix('/products')->group(function(){
+        Route::get('/','ProductController@index')->name('products');
+        Route::get('/{id}','ProductController@show')->name('single_products');
+    });
 });
