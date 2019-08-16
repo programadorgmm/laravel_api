@@ -21,14 +21,23 @@ class ProductController extends Controller
 
     public function index()
     {
-        $data =['data' => $this->product->paginate(5)];
+        $data =['data' => $this->product->all()];
         return response()->json($data);
     }
 
-    public function show(Product $id)
+    public function show($id)
     {
-        $data =['data' => $id];
-        return response()->json($data);
+        $product =$this->product->find($id);
+
+        if($product) {
+            $data =['data' => $product];
+            return response()->json($data);
+
+        } else {
+
+            return response()->json(['data' => ['msg' => 'Produto Não Encontrado']],404);;
+        }
+
     }
 
     public function store(Request $request)
