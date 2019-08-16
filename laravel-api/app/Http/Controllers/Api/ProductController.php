@@ -65,4 +65,22 @@ class ProductController extends Controller
         }
 
     }
+
+    public function delete(Product $id)
+    {
+        try{
+            $id->delete();
+            return response()->json(['data' => 'produto ' . $id->name . ' removido com sucesso.'],200);
+
+        } catch(Exception $e) {
+            if(config('app.debug')) {
+                return response()->json(ApiError::errorMessage($e->getMessage(),1012));
+            } else {
+                return response()->json(ApiError::errorMessage('Houve um erro ao deletar',1012));
+            }
+
+        }
+
+
+    }
 }
